@@ -90,7 +90,7 @@ function main() {
     declare -r patch=$1
     shift || usage "No patch file specified."
     [ -d $SCRYPT_DIR ] || usage "$SCRYPT_DIR not found, did you mean to use generate?"
-    [ -d $SCRYPT_DIR_ORIG_ORIG ] || usage "$SCRYPT_DIR_ORIG not found, did you mean to use generate?"
+    [ -d $SCRYPT_DIR_ORIG ] || usage "$SCRYPT_DIR_ORIG not found, did you mean to use generate?"
     regenerate $patch
   elif [ "$command" = "generate" ]; then
     declare -r patch=$1
@@ -395,7 +395,7 @@ function generate() {
 
   for i in $NEEDED_SOURCES; do
     echo "Restoring $i"
-    rm -r $SCRYPT_DIR/$i
+    rm -rf $SCRYPT_DIR/$i
     cp -rf $i $SCRYPT_DIR/$i
   done
 
@@ -484,7 +484,7 @@ function generatepatch() {
   rm -f $patch
   touch $patch
   for i in $sources; do
-    LC_ALL=C TZ=UTC0 diff -aup $SCRYPT_DIR_ORIG/$i $SCRYPT_DIR/$i >> $patch && die "ERROR: No diff for patch $path in file $i"
+    LC_ALL=C TZ=UTC0 diff -aupN $SCRYPT_DIR_ORIG/$i $SCRYPT_DIR/$i >> $patch && die "ERROR: No diff for patch $path in file $i"
   done
   echo "Generated patch $patch"
   echo "NOTE To make sure there are not unwanted changes from conflicting patches, be sure to review the generated patch."

@@ -50,6 +50,14 @@ cc_defaults {
                 ],
             },
         },
+        arm64: {
+            srcs: [
+                "lib/crypto/crypto_scrypt-neon.c",
+            ],
+            exclude_srcs: [
+                "lib/crypto/crypto_scrypt-ref.c",
+            ],
+        },
         x86: {
             srcs: [
                 "lib/crypto/crypto_scrypt-sse.c",

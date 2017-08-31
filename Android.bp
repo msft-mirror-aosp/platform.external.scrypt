@@ -22,6 +22,7 @@ cc_library_static {
     shared_libs: ["libcrypto"],
     sdk_version: "9",
     host_supported: true,
+    vendor_available: true,
 }
 
 cc_test {
